@@ -23,6 +23,7 @@ namespace YouTubeDownloader
 
 
 
+
         private static IEnumerable<VideoInfo> PrintAndRetrieveDownloadOptions(string youtubeUrl)
         {
             IEnumerable<VideoInfo> videoInfos = DownloadUrlResolver.GetDownloadUrls(youtubeUrl);
