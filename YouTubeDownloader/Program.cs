@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MediaToolkit;
+using MediaToolkit.Model;
 using YoutubeExtractor;
 
 namespace YouTubeDownloader
@@ -36,17 +38,17 @@ namespace YouTubeDownloader
 
         private static void Download(VideoInfo info)
         {
-            //Console.WriteLine("Do you want Video(V) or Audio(A)");
-            //string answer = Console.ReadLine().ToLower();
-            //bool isVideo = answer == "video" || answer.StartsWith("v") ? true : false;
-            //if (isVideo)
-            //{
+            Console.WriteLine("Do you want Video(V) or Audio(A)");
+            string answer = Console.ReadLine().ToLower();
+            bool isVideo = answer == "video" || answer.StartsWith("v") ? true : false;
+            if (isVideo)
+            {
                 DownloadVideo(info);
-            //}
-            //else
-            //{
-            //    DownloadAudio(info);
-            //}
+            }
+            else
+            {
+                DownloadAudio(info);
+            }
         }
 
         private static void DownloadVideo(VideoInfo video)
@@ -64,21 +66,36 @@ namespace YouTubeDownloader
             videoDownloader.Execute();
         }
 
-        //Not working because YouTube doesn't supports flash...
-        private static void DownloadAudio(VideoInfo audio)
+
+        private static void DownloadAudio(VideoInfo video)
         {
-            if (audio.RequiresDecryption)
+            if (video.RequiresDecryption)
             {
-                DownloadUrlResolver.DecryptDownloadUrl(audio);
+                DownloadUrlResolver.DecryptDownloadUrl(video);
             }
 
+
             string windowsUserName = Environment.UserName;
-            var audioDownloader = new AudioDownloader(audio, Path.Combine(@"C:\Users\" + windowsUserName + @"\downloads", audio.Title + audio.VideoExtension));
+            var videoPath = @"C:\Users\" + windowsUserName + @"\downloads";
+            var videoDownloader = new VideoDownloader(video, Path.Combine(videoPath, video.Title + video.VideoExtension));
+            
 
-            audioDownloader.DownloadProgressChanged += (sender, args) => Console.WriteLine(args.ProgressPercentage * 0.85);
-            audioDownloader.AudioExtractionProgressChanged += (sender, args) => Console.WriteLine(85 + args.ProgressPercentage * 0.15);
+            videoDownloader.DownloadProgressChanged += (sender, args) => Console.WriteLine(args.ProgressPercentage);
 
-            audioDownloader.Execute();
+            videoDownloader.Execute();
+
+            ChangeVideoToMp3(videoPath, video.Title, video.VideoExtension);
+        }
+
+        private static void ChangeVideoToMp3(string videoPath, string videoName,string extension)
+        {
+            var inputFile = new MediaFile { Filename = videoPath+@"\"+videoName+extension };
+            var outputFile = new MediaFile { Filename = videoPath+@"\"+videoName+".mp3" };
+
+            using (var engine = new Engine())
+            {
+                engine.Convert(inputFile, outputFile);
+            }
         }
 
     }
