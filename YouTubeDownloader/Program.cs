@@ -84,19 +84,9 @@ namespace YouTubeDownloader
 
             videoDownloader.Execute();
 
-            ChangeVideoToMp3(videoPath, video.Title, video.VideoExtension);
+
+            VideoToAudioConverter converter = new VideoToAudioConverter(videoPath,video.Title, video.VideoExtension);
+            converter.ConvertVideoToAudioFile();
         }
-
-        private static void ChangeVideoToMp3(string videoPath, string videoName,string extension)
-        {
-            var inputFile = new MediaFile { Filename = videoPath+@"\"+videoName+extension };
-            var outputFile = new MediaFile { Filename = videoPath+@"\"+videoName+".mp3" };
-
-            using (var engine = new Engine())
-            {
-                engine.Convert(inputFile, outputFile);
-            }
-        }
-
     }
 }
