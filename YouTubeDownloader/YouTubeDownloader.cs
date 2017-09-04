@@ -2,62 +2,60 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using YoutubeExtractor;
 
 namespace YouTubeDownloader
 {
-    class YouTubeDownloader
+    public class YouTubeDownloader
     {
-        public void Download(VideoInfo info)
+        private ResourceManager rm;
+        private string VideoSavePath;
+
+        public YouTubeDownloader()
+        {
+            rm = new ResourceManager("YouTubeDownloader.MyResources", Assembly.GetExecutingAssembly());
+            VideoSavePath = GetVideoSavePath();
+        }
+
+        private string GetVideoSavePath()
+        {
+            return rm.GetString("PathToSave").Replace("windowsUserName", Environment.UserName);
+        }
+
+        public void Download(VideoInfo video)
         {
             bool answer = UserInterface.IsVideo();
-            if (answer)
-            {
-                DownloadVideo(info);
-            }
-            else
-            {
-                DownloadAudio(info);
-            }
-        }
-
-        private void DownloadAudio(VideoInfo video)
-        {
             if (video.RequiresDecryption)
             {
                 DownloadUrlResolver.DecryptDownloadUrl(video);
             }
 
-
-            string windowsUserName = Environment.UserName;
-            var videoDownloader = new VideoDownloader(video, Path.Combine(@"C:\Users\" + windowsUserName + @"\downloads", video.Title + video.VideoExtension));
+            var videoDownloader = new VideoDownloader(video, Path.Combine(VideoSavePath, video.Title + video.VideoExtension));
 
             videoDownloader.DownloadProgressChanged += (sender, args) => Console.WriteLine(args.ProgressPercentage);
-            videoDownloader.Execute();
-        }
 
-        private void DownloadVideo(VideoInfo video)
-        {
-            if (video.RequiresDecryption)
+            videoDownloader.Execute();
+
+            if (!answer)
             {
-                DownloadUrlResolver.DecryptDownloadUrl(video);
+                VideoToAudioConverter converter = new VideoToAudioConverter(VideoSavePath, video.Title, video.VideoExtension);
+                converter.ConvertVideoToAudioFile();
+                DeleteFile(VideoSavePath + @"\" +  video.Title + video.VideoExtension);
             }
 
 
-            string windowsUserName = Environment.UserName;
-            var videoPath = @"C:\Users\" + windowsUserName + @"\downloads";
-            var videoDownloader = new VideoDownloader(video, Path.Combine(videoPath, video.Title + video.VideoExtension));
+        }
 
-
-            videoDownloader.DownloadProgressChanged += (sender, args) => Console.WriteLine(args.ProgressPercentage);
-
-            videoDownloader.Execute();
-
-
-            VideoToAudioConverter converter = new VideoToAudioConverter(videoPath, video.Title, video.VideoExtension);
-            converter.ConvertVideoToAudioFile();
+        private void DeleteFile(string pathWithFile)
+        {
+            if (File.Exists(pathWithFile))
+            {
+                File.Delete(pathWithFile);
+            }
         }
     }
 }

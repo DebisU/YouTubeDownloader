@@ -27,6 +27,7 @@ namespace YouTubeDownloader
 
         public static int SelectIndex()
         {
+            Console.WriteLine("Select index: ");
             return Convert.ToInt32(Console.ReadLine());
         }
 
