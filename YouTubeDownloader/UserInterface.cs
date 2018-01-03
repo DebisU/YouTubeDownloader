@@ -17,12 +17,24 @@ namespace YouTubeDownloader
 
         public static IEnumerable<VideoInfo> PrintAndRetrieveDownloadOptions(string youtubeUrl)
         {
-            IEnumerable<VideoInfo> videoInfos = DownloadUrlResolver.GetDownloadUrls(youtubeUrl);
+            IEnumerable<VideoInfo> videoInfos = DownloadUrlResolver.GetDownloadUrls(youtubeUrl); // seems that this call uses Newtonsoft.Json
             for (int i = 0; i < videoInfos.Count(); i++)
             {
                 Console.WriteLine(i + ")  " + videoInfos.ElementAt(i));
             }
             return videoInfos;
+        }
+
+        public static IEnumerable<string> RetrieveDownloadOptionsAsString(string youtubeUrl)
+        {
+            IEnumerable<VideoInfo> videoInfos = DownloadUrlResolver.GetDownloadUrls(youtubeUrl); // seems that this call uses Newtonsoft.Json
+            List<string> videosTypeAndResolutionList = new List<string>();
+            foreach (var actualVideo in videoInfos)
+            {
+                videosTypeAndResolutionList.Add(actualVideo.Resolution +" - "+ actualVideo.VideoType);
+                //videosTypeAndResolutionList.Add(actualVideo.ToString());
+            }
+            return videosTypeAndResolutionList;
         }
 
         public static int SelectIndex()

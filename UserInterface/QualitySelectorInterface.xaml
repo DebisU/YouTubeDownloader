@@ -1,0 +1,30 @@
+﻿<Window x:Class="UserInterface.QualitySelectorInterface"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UserInterface"
+        mc:Ignorable="d"
+        Title="QualitySelectorInterface" Height="310.791" Width="300">
+    <Grid>
+        <ListView x:Name="listView" HorizontalAlignment="Left" Height="191" Margin="10,50,0,0" VerticalAlignment="Top" Width="272">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Video Quality" Width="Auto" DisplayMemberBinding="{Binding VideoName}" />
+                    <GridViewColumn Header="Selected">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <RadioButton  Visibility="Visible" IsChecked="True" Content="Yes"></RadioButton>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button x:Name="btSelectQuality" Content="Start Download" HorizontalAlignment="Left" Margin="10,243,0,0" VerticalAlignment="Top" Width="272"/>
+        <Label x:Name="lbSelectQuality" Content="Select One of the following qualities:" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="10,19,0,0" VerticalAlignment="Top" Width="272"/>
+    </Grid>
+</Window>
