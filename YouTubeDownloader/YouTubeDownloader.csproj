@@ -55,6 +55,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Infrastructure\IQualitySelector.cs" />
+    <Compile Include="Infrastructure\QualitySelector.cs" />
     <Compile Include="MyResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

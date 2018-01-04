@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using YouTubeDownloader;
+using YouTubeDownloader.Infrastructure;
 
 namespace UserInterface
 {
@@ -27,7 +29,8 @@ namespace UserInterface
             this.youtubeUrl = youtubeUrl;
 
             //TODO: se how to perform this call without adding the NuGet package called: Newtonsoft.Json 
-            List<string> videoQualities = YouTubeDownloader.UserInterface.RetrieveDownloadOptionsAsString(youtubeUrl).ToList();
+            IQualitySelector selector = new QualitySelector();
+            List<string> videoQualities = selector.RetrieveDownloadOptionsAsString(youtubeUrl).ToList();
 
         }
         public QualitySelectorInterface()
