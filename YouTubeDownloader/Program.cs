@@ -14,13 +14,7 @@ namespace YouTubeDownloader
     {
         static void Main(string[] args)
         {
-            string youtubeUrl = UserInterface.AskForYouTubeUrl();
-            IEnumerable<VideoInfo> videoInfos = UserInterface.PrintAndRetrieveDownloadOptions(youtubeUrl);
-            int selectedIndex = UserInterface.SelectIndex();
 
-            YouTubeDownloader myDownloader = new YouTubeDownloader();
-
-            myDownloader.Download(videoInfos.ElementAt(selectedIndex));
         }
     }
 }

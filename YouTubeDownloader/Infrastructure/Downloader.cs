@@ -5,17 +5,19 @@ using System.Linq;
 using System.Reflection;
 using System.Resources;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using YoutubeExtractor;
+using YouTubeDownloader.Infrastructure;
 
-namespace YouTubeDownloader
+namespace YouTubeDownloader.Infrastructure
 {
-    public class YouTubeDownloader
+    public class Downloader : IDownloader
     {
         private ResourceManager rm;
         private string VideoSavePath;
 
-        public YouTubeDownloader()
+        public Downloader()
         {
             rm = new ResourceManager("YouTubeDownloader.MyResources", Assembly.GetExecutingAssembly());
             VideoSavePath = GetVideoSavePath();
@@ -28,26 +30,46 @@ namespace YouTubeDownloader
 
         public void Download(VideoInfo video)
         {
-            bool answer = UserInterface.IsVideo();
+            //bool answer = UserInterface.IsVideo();
             if (video.RequiresDecryption)
             {
                 DownloadUrlResolver.DecryptDownloadUrl(video);
             }
 
-            var videoDownloader = new VideoDownloader(video, Path.Combine(VideoSavePath, video.Title + video.VideoExtension));
+            VideoDownloader videoDownloader = new VideoDownloader(video, Path.Combine(VideoSavePath, video.Title + video.VideoExtension));
 
             videoDownloader.DownloadProgressChanged += (sender, args) => Console.WriteLine(args.ProgressPercentage);
 
             videoDownloader.Execute();
 
-            if (!answer)
-            {
+            //if (!answer)
+            //{
                 VideoToAudioConverter converter = new VideoToAudioConverter(VideoSavePath, video.Title, video.VideoExtension);
                 converter.ConvertVideoToAudioFile();
                 DeleteFile(VideoSavePath + @"\" +  video.Title + video.VideoExtension);
+            //}
+        }
+
+        public async void DownloadAsync(VideoInfo video)
+        {
+            Thread downloadVideoThread = new Thread(() => Download(video));
+            downloadVideoThread.Start();
+        }
+
+        public IEnumerable<string> RetrieveDownloadOptionsAsString(string youtubeUrl)
+        {
+            IEnumerable<VideoInfo> videoInfos = DownloadUrlResolver.GetDownloadUrls(youtubeUrl); // seems that this call uses Newtonsoft.Json
+            List<string> videosTypeAndResolutionList = new List<string>();
+            foreach (var actualVideo in videoInfos)
+            {
+                videosTypeAndResolutionList.Add(actualVideo.ToString());
             }
+            return videosTypeAndResolutionList;
+        }
 
-
+        public async Task<IEnumerable<VideoInfo>> RetrieveDownloadOptions(string youtubeUrl)
+        {
+            return DownloadUrlResolver.GetDownloadUrls(youtubeUrl);
         }
 
         private void DeleteFile(string pathWithFile)

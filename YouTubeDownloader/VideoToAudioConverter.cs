@@ -17,7 +17,6 @@ namespace YouTubeDownloader
         {
             InputFile = new MediaFile { Filename = videoPath + @"\" + fileName + audioExtensionToConvert };
             OutputFile = new MediaFile { Filename = videoPath + @"\" + fileName + ".mp3" };
-
         }
 
         public void ConvertVideoToAudioFile()

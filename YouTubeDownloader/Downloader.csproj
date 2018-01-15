@@ -55,8 +55,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Infrastructure\IQualitySelector.cs" />
-    <Compile Include="Infrastructure\QualitySelector.cs" />
+    <Compile Include="Infrastructure\IDownloader.cs" />
     <Compile Include="MyResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -66,7 +65,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserInterface.cs" />
     <Compile Include="VideoToAudioConverter.cs" />
-    <Compile Include="YouTubeDownloader.cs" />
+    <Compile Include="Infrastructure\Downloader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -5,15 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UserInterface"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="395" Width="666.333" GotFocus="Window_GotFocus">
     <Grid>
-        <TextBox x:Name="tbYoutubeUrlToDownload" HorizontalAlignment="Left" Height="23" Margin="37,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="332"/>
-        <Button x:Name="btDownloadUrl" Content="Start download" HorizontalAlignment="Left" Margin="397,46,0,0" VerticalAlignment="Top" Width="95" Click="btDownloadUrl_Click"/>
-        <ListView x:Name="listView" HorizontalAlignment="Left" Height="184" Margin="37,100,0,0" VerticalAlignment="Top" Width="455">
+        <TextBox x:Name="tbYoutubeUrlToDownload" HorizontalAlignment="Left" Height="23" Margin="37,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="467"/>
+        <Button x:Name="btDownloadUrl" Content="Select Quality" HorizontalAlignment="Left" Margin="514,46,0,0" VerticalAlignment="Top" Width="95" Click="btDownloadUrl_Click"/>
+        <ListView x:Name="LvDownloads" HorizontalAlignment="Left" Height="184" Margin="37,138,0,0" VerticalAlignment="Top" Width="572">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Name" Width="Auto" DisplayMemberBinding="{Binding VideoName}" />
-                    <GridViewColumn Header="Url" Width="Auto" DisplayMemberBinding="{Binding VideoUrl}" />
+                    <GridViewColumn Header="Name" Width="Auto" />
                     <GridViewColumn Width="Auto" Header="Progress">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -21,11 +20,10 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Quality" Width="Auto" DisplayMemberBinding="{Binding VideoQuality}" />
-
                 </GridView>
             </ListView.View>
         </ListView>
-
+        <ComboBox x:Name="CbVideoQualities" HorizontalAlignment="Left" Margin="37,91,0,0" VerticalAlignment="Top" Width="467"/>
+        <Button x:Name="btDownloadUrl_Copy" Content="Start download" HorizontalAlignment="Left" Margin="514,91,0,0" VerticalAlignment="Top" Width="95" Click="btDownloadUrl_Copy_Click"/>
     </Grid>
 </Window>

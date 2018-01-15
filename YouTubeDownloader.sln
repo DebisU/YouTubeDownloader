@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YouTubeDownloader", "YouTubeDownloader\YouTubeDownloader.csproj", "{B0032FC0-8B74-4EC2-94AA-9EB9410BBC83}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Downloader", "YouTubeDownloader\Downloader.csproj", "{B0032FC0-8B74-4EC2-94AA-9EB9410BBC83}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserInterface", "UserInterface\UserInterface.csproj", "{75195859-2D4C-4AE4-9601-A2AE5FE35FEA}"
 EndProject
