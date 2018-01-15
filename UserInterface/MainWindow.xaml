@@ -5,18 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UserInterface"
         mc:Ignorable="d"
-        Title="MainWindow" Height="395" Width="666.333" GotFocus="Window_GotFocus">
+        Title="MainWindow" Height="395" Width="666.333">
     <Grid>
-        <TextBox x:Name="tbYoutubeUrlToDownload" HorizontalAlignment="Left" Height="23" Margin="37,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="467"/>
+        <TextBox x:Name="tbYoutubeUrlToDownload" HorizontalAlignment="Left" Height="23" Margin="37,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="467" GotFocus="tbYoutubeUrlToDownload_GotFocus"/>
         <Button x:Name="btDownloadUrl" Content="Select Quality" HorizontalAlignment="Left" Margin="514,46,0,0" VerticalAlignment="Top" Width="95" Click="btDownloadUrl_Click"/>
         <ListView x:Name="LvDownloads" HorizontalAlignment="Left" Height="184" Margin="37,138,0,0" VerticalAlignment="Top" Width="572">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name" Width="Auto" />
-                    <GridViewColumn Width="Auto" Header="Progress">
+                    <GridViewColumn Header="Progress" Width="Auto" >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <ProgressBar Maximum="100" Value="{Binding VideoProgress}"/>
+                                <ProgressBar Maximum="100"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

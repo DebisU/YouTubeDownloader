@@ -55,6 +55,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Infrastructure\DownloadItem.cs" />
     <Compile Include="Infrastructure\IDownloader.cs" />
     <Compile Include="MyResources.Designer.cs">
       <AutoGen>True</AutoGen>
