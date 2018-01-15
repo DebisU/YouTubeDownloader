@@ -12,6 +12,7 @@ namespace YouTubeDownloader.Infrastructure
         void Download(VideoInfo video);
         void DownloadAsync(VideoInfo video);
         IEnumerable<string> RetrieveDownloadOptionsAsString(string youtubeUrl);
-        Task<IEnumerable<VideoInfo>> RetrieveDownloadOptions(string youtubeUrl);
+        Task<IEnumerable<VideoInfo>> RetrieveDownloadOptionsAsync(string youtubeUrl);
+        IEnumerable<VideoInfo> RetrieveDownloadOptions(string youtubeUrl);
     }
 }
