@@ -27,7 +27,7 @@ namespace UserInterface
             InitializeComponent();
             YoutubeUrl = String.Empty;
             VideoWithQualities = new List<VideoInfo>();
-            VideosInListView = new SortedDictionary<VideoInfo, ProgressBar>();
+            //VideosInListView = new SortedDictionary<VideoInfo, ProgressBar>();
             Downloader = new MyYoutubeDownloader();
         }
 
@@ -48,7 +48,7 @@ namespace UserInterface
             foreach (var actualItem in VideoWithQualities)
             {
                 CbVideoQualities.Items.Add(actualItem);
-                VideosInListView.Add(actualItem, new ProgressBar());
+                //VideosInListView.Add(actualItem, new ProgressBar());
             }
         }
 
@@ -82,6 +82,16 @@ namespace UserInterface
                 tbYoutubeUrlToDownload.Text = actualClipboardText;
                 PopulateQuialitySelectorComboBox();
             }
+        }
+
+        private void MenuItem_SavePath_Click(object sender, RoutedEventArgs e)
+        {
+
+            }
+
+        private void MenuItem_Close_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }

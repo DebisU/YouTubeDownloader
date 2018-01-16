@@ -25,5 +25,12 @@
         </ListView>
         <ComboBox x:Name="CbVideoQualities" HorizontalAlignment="Left" Margin="37,91,0,0" VerticalAlignment="Top" Width="467"/>
         <Button x:Name="btDownloadUrl_Copy" Content="Start download" HorizontalAlignment="Left" Margin="514,91,0,0" VerticalAlignment="Top" Width="95" Click="btDownloadUrl_Copy_Click"/>
+        <Menu DockPanel.Dock="Top" Margin="0,0,0,337">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Save path" Click="MenuItem_SavePath_Click" />
+                <Separator />
+                <MenuItem Header="_Exit" Click="MenuItem_Close_Click" />
+            </MenuItem>
+        </Menu>
     </Grid>
 </Window>

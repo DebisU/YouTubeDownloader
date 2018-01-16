@@ -1,33 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Resources;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using YoutubeExtractor;
-using YouTubeDownloader.Infrastructure;
 
 namespace YouTubeDownloader.Infrastructure
 {
     public class MyYoutubeDownloader : IDownloader
     {
-        private ResourceManager rm;
         private string VideoSavePath;
         public List<VideoInfo> videoInfo;
 
         public MyYoutubeDownloader()
         {
-            rm = new ResourceManager("YouTubeDownloader.MyResources", Assembly.GetExecutingAssembly());
-            VideoSavePath = GetVideoSavePath();
+            VideoSavePath = Constants.DownloadPath;
             videoInfo = new List<VideoInfo>();
-        }
-
-        private string GetVideoSavePath()
-        {
-            return rm.GetString("PathToSave").Replace("windowsUserName", Environment.UserName);
         }
 
         public void Download(VideoInfo video)
@@ -44,6 +34,7 @@ namespace YouTubeDownloader.Infrastructure
 
             videoDownloader.Execute();
 
+            /// TODO: Reimplement the audio to video converter.
             //if (!answer)
             //{
                 VideoToAudioConverter converter = new VideoToAudioConverter(VideoSavePath, video.Title, video.VideoExtension);
@@ -52,10 +43,12 @@ namespace YouTubeDownloader.Infrastructure
             //}
         }
 
-        public async void DownloadAsync(VideoInfo video)
+        public void DownloadAsync(VideoInfo video)
         {
-            Thread downloadVideoThread = new Thread(() => Download(video));
-            downloadVideoThread.Start();
+            //Thread downloadVideoThread = new Thread(() => Download(video));
+            Task downloadVideoTask = new Task(()=> Download(video));
+            downloadVideoTask.Start();
+            //downloadVideoThread.Start();
         }
 
         public IEnumerable<string> RetrieveDownloadOptionsAsString(string youtubeUrl)
