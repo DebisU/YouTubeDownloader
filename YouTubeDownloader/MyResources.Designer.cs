@@ -61,6 +61,15 @@ namespace YouTubeDownloader {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to C:\Users\windowsUserName\Desktop.
+        /// </summary>
+        internal static string PathToDownloadFile {
+            get {
+                return ResourceManager.GetString("PathToDownloadFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to C:\Users\windowsUserName\downloads.
         /// </summary>
         internal static string PathToSave {

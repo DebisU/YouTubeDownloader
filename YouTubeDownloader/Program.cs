@@ -14,13 +14,32 @@ namespace YouTubeDownloader
     {
         static void Main(string[] args)
         {
-            string youtubeUrl = UserInterface.AskForYouTubeUrl();
-            IEnumerable<VideoInfo> videoInfos = UserInterface.PrintAndRetrieveDownloadOptions(youtubeUrl);
-            int selectedIndex = UserInterface.SelectIndex();
+            bool isPlayList = UserInterface.IsPlaylist();
 
-            YouTubeDownloader myDownloader = new YouTubeDownloader();
+            if (!isPlayList)
+            {
+                string youtubeUrl = UserInterface.AskForYouTubeUrl();
+                IEnumerable<VideoInfo> videoInfos = UserInterface.PrintAndRetrieveDownloadOptions(youtubeUrl);
+                int selectedIndex = UserInterface.SelectIndex();
 
-            myDownloader.Download(videoInfos.ElementAt(selectedIndex));
+                YouTubeDownloader myDownloader = new YouTubeDownloader();
+
+                myDownloader.Download(videoInfos.ElementAt(selectedIndex));
+            }
+            else
+            {
+                throw new NotImplementedException("This module is not ready yet, sorry for the inconveniences");
+
+                List<IEnumerable<VideoInfo>> videoInfos = UserInterface.PrintAndRetrieveDownloadOptions();
+                int selectedIndex = UserInterface.SelectIndex();
+
+                YouTubeDownloader myDownloader = new YouTubeDownloader();
+
+                foreach (var item in videoInfos)
+                {
+                    myDownloader.Download(item.ElementAt(selectedIndex));
+                }
+            }
         }
     }
 }
